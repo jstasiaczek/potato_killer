@@ -1,0 +1,13 @@
+{
+    "McServerAddress": "localhost",
+	"McServerPort": "25565",
+	"JavaCrashReportDir": "/path/to/the/dir",
+	"JavaCrashReportPrefix": "hr-",
+	"McCrashReportDir": "/path/to/the/server/crash-reports",
+	"McServerJarFileName": "server.jar",
+	"PufferPanelServerUrl": "http://localhost:8080",
+	"PufferPanelUserEmail": "user@example.org",
+	"PufferPanelUserPasswd": "Test1234",
+	"PufferPanelServerId": "server-id",
+	"RefreshTimeout": 30
+}
