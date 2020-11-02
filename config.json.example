@@ -9,5 +9,6 @@
 	"PufferPanelUserEmail": "user@example.org",
 	"PufferPanelUserPasswd": "Test1234",
 	"PufferPanelServerId": "server-id",
-	"RefreshTimeout": 30
+	"RefreshTimeout": 30,
+	"LogLevel": 3
 }

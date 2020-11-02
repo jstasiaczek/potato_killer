@@ -19,6 +19,7 @@ type Config struct {
 	PufferPanelUserPasswd string
 	PufferPanelServerId   string
 	RefreshTimeout        time.Duration
+	LogLevel              int
 }
 
 func Import(configPath *string, config *Config) {

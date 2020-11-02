@@ -52,14 +52,14 @@ func main() {
 		//validate state
 		validateState(state)
 		// detect if crash happened
-		detectCrash(state, client)
+		detectCrash(state, client, conf.LogLevel)
 		// log.Printf("%+v\n", state)
 		// wait before next check
 		time.Sleep(conf.RefreshTimeout * time.Second)
 	}
 }
 
-func detectCrash(state *ServerState, client *puffer_client.PufferClient) {
+func detectCrash(state *ServerState, client *puffer_client.PufferClient, loglevel int) {
 	crashProbability := 0
 	// if we have more crash reports than last time
 	if state.LastMcCrashCount > state.McCrashCount || state.LastJavaCrashCount > state.JavaCrashCount {
@@ -72,6 +72,19 @@ func detectCrash(state *ServerState, client *puffer_client.PufferClient) {
 	// if there is no pid found
 	if state.ServerPid == 0 {
 		crashProbability++
+	}
+
+	if crashProbability == 0 && loglevel == 1 {
+		log.Println("[INFO] Server running ok.")
+	}
+
+	if crashProbability > 0 && crashProbability <= 2 && loglevel == 2 {
+		log.Println("[WARNING] Serwer not responding, but it is not crash! Crash probability score:", crashProbability)
+		log.Println("[WARNING] Summary: ")
+		log.Println("[WARNING]\tMC crash count: ", state.LastMcCrashCount, ", previous:", state.McCrashCount)
+		log.Println("[WARNING]\tJava crash count: ", state.LastJavaCrashCount, ", previous:", state.JavaCrashCount)
+		log.Println("[WARNING]\tServer is pingable:", state.IsPingable)
+		log.Println("[WARNING]\tServer process id:", state.ServerPid)
 	}
 
 	//so if we have less than 2 crash symptom, we are not sure if server crasched, lets wait for more
@@ -87,6 +100,7 @@ func detectCrash(state *ServerState, client *puffer_client.PufferClient) {
 
 	// if pid is bigger than 0, we need to kill server, and wait some time
 	if state.ServerPid > 0 {
+		log.Println("SERVER KILL")
 		err := client.KillServer()
 		if err != nil {
 			log.Println(err)

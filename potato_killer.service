@@ -1,0 +1,13 @@
+[Unit]
+Description=potato killer
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/potato_killer
+ExecStart=/opt/potato_killer/potato_killer -config=/opt/potato_killer/config.json
+;ExecStop=??
+User=pufferpanel
+Group=pufferpanel
+
+[Install]
+WantedBy=multi-user.target
