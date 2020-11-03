@@ -8,6 +8,8 @@ ExecStart=/opt/potato_killer/potato_killer -config=/opt/potato_killer/config.jso
 ;ExecStop=??
 User=pufferpanel
 Group=pufferpanel
+RestartSec=5
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
